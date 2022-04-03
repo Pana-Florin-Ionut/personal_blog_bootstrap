@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}User Name{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+
+<div class="container">
+  {% if email %}
+  <h1>Email: {{ email }}!!</h1>
+  <h1>Password: {{ password }}</h1>
+  <br>
+  <h2>I found this info: </h2>
+  <h2>Name: {{ pw_to_check.name }}</h2>
+  <h2>Email: {{ pw_to_check.email }}</h2>
+  <h2>PW: {{ pw_to_check.password_hash }}</h2>
+  <h2>Passed: {{ passed }}</h2>
+  <img src="{{ url_for('static', filename='images/wall (1).png')}}" class="img-fluid" alt="image">
+
+  {% else %}
+  <h1>What's your Email and Password?</h1>
+  <br>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.email.label(class="form-label") }}
+    {{ form.email(class="form-control") }}
+    <br>
+    {{ form.password_hash.label(class="form-label") }}
+    {{ form.password_hash(class="form-control") }}
+    <br>
+    {{ form.submit(class="btn btn-primary") }}
+     
+  </form>
+
+  {% endif %} 
+  
+</div>
+  
+{% endblock %}

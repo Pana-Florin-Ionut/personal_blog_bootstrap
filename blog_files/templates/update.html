@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Update User{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+
+<div class="container">
+  {% for message in get_flashed_messages() %}
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+      Hey {{name}} - {{message}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>    
+  {% endfor%}
+  
+  {% if id == current_user.id %}
+  
+  <h1>Update User</h1>
+
+  <br>
+  <form action="/update/{{ name_to_update.id }}", method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.name.label(class="form-label") }}
+    {{ form.name(class="form-control", value=name_to_update.name) }}
+    <br>
+    
+    {{ form.username.label(class="form-label") }}
+    {{ form.username(class="form-control", value=name_to_update.username) }}
+    <br>
+    {{ form.email.label(class="form-label") }}
+    {{ form.email(class="form-control", value=name_to_update.email) }}
+    <br>
+    {{ form.favorite_color.label(class="form-label") }}
+    {{ form.favorite_color(class="form-control", value=name_to_update.favorite_color) }}
+    <br>
+    <br>
+    {{ form.submit(class="btn btn-primary") }}
+    <a href= " {{ url_for('delete', id=name_to_update.id) }}" class="btn btn-danger">Delete</a>
+    <br>
+     
+  </form >
+  <table class="table table-hover table-bordered table-striped">
+    {% for our_user in our_users %}
+      <tr>
+        <td>
+          {{ our_user.id }}. {{ our_user.name }} - {{ our_user.email }} - {{ our_user.favorite_color }}
+        </td>
+      </tr>
+    {% endfor%}
+    </table>
+
+  {% else %}
+  <!-- {{ id }}; {{ current_user.id }} -->
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    You cannot update this!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <h2>Acces denied</h2>
+    <p>You dont have the credentials</p>
+  {% endif %}
+</div>
+  
+{% endblock %}

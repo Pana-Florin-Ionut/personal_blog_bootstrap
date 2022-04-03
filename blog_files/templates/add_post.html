@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Add Blog Post{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+
+  <div class="container">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    Hey {{name}} - {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>    
+  {% endfor%}
+
+  {% if current_user.is_authenticated%}
+
+  <h1>Add blog post</h1>
+  <br>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.title.label(class="form-label") }}
+    {{ form.title(class="form-control") }}
+    <br>
+    {{ form.slug.label(class="form-label") }}
+    {{ form.slug(class="form-control") }}
+    <br>
+    <br>
+    {{ form.textfield.label(class="form-label") }}
+    {{ form.textfield(class="form-control", rows="5") }}
+    <br>
+    
+    {{ form.submit(class="btn btn-primary") }}
+    <br>
+     
+  </form>
+{{ ckeditor.load() }}
+{{ ckeditor.config(name="textfield") }}
+  
+</div>
+{% else %}
+<h2>Sorry you have to be logged in!</h2>
+<a href="{{ url_for('login') }}">Log in!</a>
+{% endif %}
+  
+{% endblock %}
